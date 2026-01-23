@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { ArrowLeft, Calculator, Info, RotateCcw, TrendingUp } from 'lucide-react';
+import { ArrowLeft, Calculator, Info, RotateCcw, TrendingUp, Globe } from 'lucide-react';
 import { gradePoints } from '../utils/gradeSystem';
+import { InternationalGPAConverter } from './InternationalGPAConverter';
 
 interface CGPACalculatorProps {
   onBack: () => void;
@@ -17,6 +18,7 @@ export function CGPACalculator({ onBack }: CGPACalculatorProps) {
   const [numSemesters, setNumSemesters] = useState('');
   const [semesters, setSemesters] = useState<Semester[]>([]);
   const [calculatedCGPA, setCalculatedCGPA] = useState<number | null>(null);
+  const [showInternational, setShowInternational] = useState(false);
 
   const handleNumSemestersSubmit = () => {
     const num = parseInt(numSemesters);
@@ -64,6 +66,7 @@ export function CGPACalculator({ onBack }: CGPACalculatorProps) {
     setNumSemesters('');
     setSemesters([]);
     setCalculatedCGPA(null);
+    setShowInternational(false);
   };
 
   if (step === 'input-count') {
@@ -342,7 +345,7 @@ export function CGPACalculator({ onBack }: CGPACalculatorProps) {
               </div>
             </div>
 
-            <div className="bg-blue-50 border-l-4 border-blue-500 p-4">
+            <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
               <div className="flex gap-2">
                 <Info className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
                 <div className="text-sm text-blue-900">
@@ -358,7 +361,24 @@ export function CGPACalculator({ onBack }: CGPACalculatorProps) {
                 </div>
               </div>
             </div>
+
+            {!showInternational && (
+              <button
+                onClick={() => setShowInternational(true)}
+                className="w-full bg-gradient-to-r from-purple-500 to-indigo-600 text-white py-3 rounded-lg hover:from-purple-600 hover:to-indigo-700 transition-all flex items-center justify-center gap-2"
+              >
+                <Globe className="w-5 h-5" />
+                Convert to International CGPA Systems
+              </button>
+            )}
           </div>
+
+          {showInternational && (
+            <InternationalGPAConverter
+              cgpa={calculatedCGPA}
+              onClose={() => setShowInternational(false)}
+            />
+          )}
         </div>
       </div>
     );

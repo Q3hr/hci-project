@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { Globe, Info, X } from 'lucide-react';
 
 interface InternationalGPAConverterProps {
-  gpa: number;
-  onClose: () => void;
+  gpa?: number;
+  cgpa?: number;
+  onClose?: () => void;
 }
 
 interface CountrySystem {
@@ -14,50 +15,55 @@ interface CountrySystem {
   explanation: string;
 }
 
-export function InternationalGPAConverter({ gpa, onClose }: InternationalGPAConverterProps) {
+export function InternationalGPAConverter({ gpa, cgpa, onClose }: InternationalGPAConverterProps) {
   const [selectedCountry, setSelectedCountry] = useState<string>('');
+  
+  // Determine which value we're converting (GPA or CGPA)
+  const value = cgpa !== undefined ? cgpa : (gpa !== undefined ? gpa : 0);
+  const isCGPA = cgpa !== undefined;
+  const label = isCGPA ? 'CGPA' : 'GPA';
 
   const countrySystems: { [key: string]: CountrySystem } = {
     usa: {
       name: 'United States (4.0 Scale)',
       scale: '4.0',
-      convertedGPA: gpa.toFixed(2),
-      percentage: ((gpa / 4.0) * 100).toFixed(1) + '%',
-      explanation: 'US institutions typically use a 4.0 scale. Your GPA is already in this format.',
+      convertedGPA: value.toFixed(2),
+      percentage: ((value / 4.0) * 100).toFixed(1) + '%',
+      explanation: `US institutions typically use a 4.0 scale. Your ${label} is already in this format.`,
     },
     uk: {
       name: 'United Kingdom (UK Honours)',
       scale: 'Class System',
-      convertedGPA: gpa >= 3.7 ? 'First Class' : gpa >= 3.3 ? 'Upper Second (2:1)' : gpa >= 3.0 ? 'Lower Second (2:2)' : gpa >= 2.7 ? 'Third Class' : 'Pass',
-      percentage: ((gpa / 4.0) * 100).toFixed(1) + '%',
+      convertedGPA: value >= 3.7 ? 'First Class' : value >= 3.3 ? 'Upper Second (2:1)' : value >= 3.0 ? 'Lower Second (2:2)' : value >= 2.7 ? 'Third Class' : 'Pass',
+      percentage: ((value / 4.0) * 100).toFixed(1) + '%',
       explanation: 'UK uses a class system. First Class typically requires 70%+, Upper Second 60-69%, Lower Second 50-59%.',
     },
     germany: {
       name: 'Germany (1-5 Scale, inverted)',
       scale: '1.0-5.0',
-      convertedGPA: (5 - (gpa / 4.0) * 4).toFixed(2),
-      percentage: ((gpa / 4.0) * 100).toFixed(1) + '%',
+      convertedGPA: (5 - (value / 4.0) * 4).toFixed(2),
+      percentage: ((value / 4.0) * 100).toFixed(1) + '%',
       explanation: 'German scale is inverted: 1.0 is the best, 5.0 is fail. Lower numbers indicate better performance.',
     },
     canada: {
       name: 'Canada (4.0 Scale)',
       scale: '4.0',
-      convertedGPA: gpa.toFixed(2),
-      percentage: ((gpa / 4.0) * 100).toFixed(1) + '%',
+      convertedGPA: value.toFixed(2),
+      percentage: ((value / 4.0) * 100).toFixed(1) + '%',
       explanation: 'Canadian universities typically use a 4.0 scale similar to the US system.',
     },
     australia: {
       name: 'Australia (7.0 Scale)',
       scale: '7.0',
-      convertedGPA: ((gpa / 4.0) * 7).toFixed(2),
-      percentage: ((gpa / 4.0) * 100).toFixed(1) + '%',
+      convertedGPA: ((value / 4.0) * 7).toFixed(2),
+      percentage: ((value / 4.0) * 100).toFixed(1) + '%',
       explanation: 'Australian universities use a 7.0 scale. 7.0 is the highest, 4.0 is a pass.',
     },
     india: {
       name: 'India (10.0 Scale)',
       scale: '10.0',
-      convertedGPA: ((gpa / 4.0) * 10).toFixed(2),
-      percentage: ((gpa / 4.0) * 100).toFixed(1) + '%',
+      convertedGPA: ((value / 4.0) * 10).toFixed(2),
+      percentage: ((value / 4.0) * 100).toFixed(1) + '%',
       explanation: 'Many Indian universities use a 10.0 scale. This is an approximate conversion.',
     },
   };
@@ -70,17 +76,19 @@ export function InternationalGPAConverter({ gpa, onClose }: InternationalGPAConv
             <Globe className="w-6 h-6 text-white" />
           </div>
           <div>
-            <h2 className="text-2xl text-gray-900">International GPA Interpretation</h2>
-            <p className="text-gray-600 text-sm">See how your GPA translates across different systems</p>
+            <h2 className="text-2xl text-gray-900">International {label} Interpretation</h2>
+            <p className="text-gray-600 text-sm">See how your {label} translates across different systems</p>
           </div>
         </div>
-        <button
-          onClick={onClose}
-          className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-          aria-label="Close"
-        >
-          <X className="w-5 h-5 text-gray-500" />
-        </button>
+        {onClose && (
+          <button
+            onClick={onClose}
+            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            aria-label="Close"
+          >
+            <X className="w-5 h-5 text-gray-500" />
+          </button>
+        )}
       </div>
 
       <div className="bg-amber-50 border-l-4 border-amber-500 p-4 mb-6">
@@ -92,7 +100,7 @@ export function InternationalGPAConverter({ gpa, onClose }: InternationalGPAConv
               Different universities may use different conversion methods.
             </p>
             <p>
-              Always check with the specific institution you're applying to for their official GPA conversion policy.
+              Always check with the specific institution you're applying to for their official {label} conversion policy.
             </p>
           </div>
         </div>
@@ -121,9 +129,9 @@ export function InternationalGPAConverter({ gpa, onClose }: InternationalGPAConv
         <div className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl p-6 text-white">
-              <p className="text-indigo-100 text-sm mb-1">Your Original GPA</p>
-              <p className="text-4xl mb-2">{gpa.toFixed(2)}</p>
-              <p className="text-indigo-100 text-sm">4.0 Scale (US Standard)</p>
+              <p className="text-indigo-100 text-sm mb-1">Your Original {label}</p>
+              <p className="text-4xl mb-2">{value.toFixed(2)}</p>
+              <p className="text-indigo-100 text-sm">4.0 Scale (Local Standard)</p>
             </div>
             <div className="bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl p-6 text-white">
               <p className="text-purple-100 text-sm mb-1">{countrySystems[selectedCountry].name}</p>
@@ -150,7 +158,7 @@ export function InternationalGPAConverter({ gpa, onClose }: InternationalGPAConv
               <div className="text-sm text-blue-900">
                 <p>
                   <strong>Next Steps:</strong> If you're applying to universities in {countrySystems[selectedCountry].name.split('(')[0].trim()}, 
-                  contact their admissions office to confirm their specific GPA conversion process. Some institutions may 
+                  contact their admissions office to confirm their specific {label} conversion process. Some institutions may 
                   require an official credential evaluation service like WES or ECE.
                 </p>
               </div>
