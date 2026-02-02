@@ -256,27 +256,6 @@ This project is designed as an **educational tool** for academic performance tra
 
 ---
 
-## 📸 Screenshots
-
-> **Note**: Screenshots demonstrate UI/UX design implementation
-
-### Main Dashboard
-```
-[Placeholder: Course input form with dynamic fields and calculation button]
-```
-
-### Results Display
-```
-[Placeholder: GPA/CGPA results with visual performance indicators]
-```
-
-### Responsive Mobile View
-```
-[Placeholder: Mobile-optimized interface demonstration]
-```
-
----
-
 ## 📄 License & Usage
 
 ### Academic Use License
@@ -306,8 +285,20 @@ For collaboration or specific usage inquiries, please contact the project mainta
 
 ---
 
-[![GitHub](https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github)](https://github.com)
-[![Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-000000?style=for-the-badge&logo=vercel)](https://gpa-cgpa-calculation-web.vercel.app/)
+
+
+**Human-Computer Interaction | User-Centered Design | Web Engineering**
+
+
+[![University](https://img.shields.io/badge/Institution-University_of_Wah-blue.svg)](#)
+[![Department](https://img.shields.io/badge/Department-Cybersecurity-purple.svg)](#)
+[![Course](https://img.shields.io/badge/Course-Human_Computer_Interaction-teal.svg)](#)
+[![Semester](https://img.shields.io/badge/Semester-5th-green.svg)](#)
+[![Project](https://img.shields.io/badge/Type-Research_Project-orange.svg)](#)
+
+---
+
+**⭐ Star this repository if it helped your cybersecurity learning journey!**
 
 **Human-Computer Interaction | User-Centered Design | Web Engineering**
 
