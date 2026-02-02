@@ -283,9 +283,6 @@ For collaboration or specific usage inquiries, please contact the project mainta
 
 **Built with 💡 innovation, 🎨 design thinking, and ⚡ modern web technologies**
 
----
-
-
 
 **Human-Computer Interaction | User-Centered Design | Web Engineering**
 
@@ -300,6 +297,5 @@ For collaboration or specific usage inquiries, please contact the project mainta
 
 **⭐ Star this repository if it helped your cybersecurity learning journey!**
 
-**Human-Computer Interaction | User-Centered Design | Web Engineering**
 
 </div>
